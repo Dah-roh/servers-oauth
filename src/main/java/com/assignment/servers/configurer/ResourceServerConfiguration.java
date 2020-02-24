@@ -12,20 +12,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @Configuration
 public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
 
+
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.parentAuthenticationManager(authenticationManager)
-               .inMemoryAuthentication()
-                .withUser("Gadibia")
-                .password("telekinesis")
-                .roles("USER");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.requestMatchers()
                 .antMatchers("/login", "/oauth/authorize")
                 .and()
@@ -35,5 +29,16 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .permitAll();
+    }
+
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        auth.parentAuthenticationManager(authenticationManager)
+                .inMemoryAuthentication()
+                .withUser("Gadibia")
+                .password("telekinesis")
+                .roles("USER");
     }
 }
